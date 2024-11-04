@@ -1,0 +1,29 @@
+<!-- client.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Notification Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Campus Notification Client</h1>
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io('http://192.168.102.81:5002'); // Replace with your server's IP address
+
+        socket.on('receive_message', function(data) {
+            const notificationsDiv = document.getElementById('notifications');
+            notificationsDiv.innerHTML += `<div class="notification"><strong>${data.category}:</strong> ${data.message}</div>`;
+            if (data.category === 'emergency') {
+                alert(`Emergency Alert: ${data.message}`);
+            }
+        });
+    </script>
+</body>
+</html>

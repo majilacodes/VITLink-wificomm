@@ -1,0 +1,42 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Notification System - Admin</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Campus Notification System</h1>
+        <div class="notification-form">
+            <textarea id="message" placeholder="Type your message here..." required></textarea>
+            <select id="category">
+                <option value="schedule">Class Schedule</option>
+                <option value="emergency">Emergency Alert</option>
+                <option value="event">Event Update</option>
+            </select>
+            <button id="send">Send Notification</button>
+        </div>
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        document.getElementById('send').onclick = function() {
+            const message = document.getElementById('message').value;
+            const category = document.getElementById('category').value;
+            socket.emit('send_message', { message, category });
+            document.getElementById('message').value = ''; // Clear the message input
+        };
+
+        socket.on('receive_message', function(data) {
+            const notificationsDiv = document.getElementById('notifications');
+            notificationsDiv.innerHTML += `<p><strong>${data.category}:</strong> ${data.message}</p>`;
+        });
+    </script>
+</body>
+</html>
