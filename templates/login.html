@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+            font-family: 'Times New Roman', Times, serif; /* Change font to Times New Roman */
+            display: flex; /* Use flexbox to center the container */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            background-image: url('../static/VITLink.jpg'); 
+            background-size: cover; /* Ensures the image covers the entire area */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+        }
+        .login-container {
+            width: 100%; /* Set width to 100% to utilize available space */
+            max-width: 450px; /* Increased max width for the form */
+            padding: 30px; /* Add padding */
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+        }
+
+        .login-container:hover {
+            transform: scale(1.01); /* Slightly enlarge the box on hover */
+            box-shadow: 0 0 25px rgba(0, 0, 0); /* Enhance shadow on hover */
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255); /* Transparent background for input boxes */
+            border: 1px solid rgba(0, 0, 0,); /* Light border for input boxes */
+        }
+
+        h2 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button> <!-- Full-width button -->
+        </form>
+    </div>
+</body>
+</html>
